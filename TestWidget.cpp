@@ -1,6 +1,8 @@
 #include "TestWidget.h"
 #include "ui_TestWidget.h"
 
+#include <fstream>
+
 #include <QApplication>
 #include <QFile>
 #include <QByteArray>
@@ -73,14 +75,11 @@ void TestWidget::readAllSampleFile()
     impl->mSize = QFile(YUV_FILE_PATH).size();
     impl->mBuffer = new unsigned char[impl->mSize];
 
-    FILE* f = fopen(YUV_FILE_PATH, "rb");
-    unsigned readSize = fread(impl->mBuffer, 1, impl->mSize, f);
+    std::ifstream yuv_file(YUV_FILE_PATH, std::ios::binary);
+    yuv_file.read(reinterpret_cast<char*>(impl->mBuffer), impl->mSize);
 
-    if (readSize < impl->mSize && ferror(f))
-    {
-        qDebug() << "YUV file read error readSize: " << readSize;
-    }
-    fclose(f);
+    if (yuv_file.tellg() < impl->mSize)
+        qWarning() << "YUV file read error, could read only: " << yuv_file.tellg();
 
     impl->ui->playAllButton->setEnabled(true);
 }

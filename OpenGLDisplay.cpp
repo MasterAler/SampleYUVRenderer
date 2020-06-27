@@ -225,6 +225,13 @@ void OpenGLDisplay::paintGL()
     glActiveTexture(GL_TEXTURE0);
     // Use the texture generated from y to generate texture
     glBindTexture(GL_TEXTURE_2D, impl->id_y);
+
+    // Fixes abnormality with 174x100 yuv data
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+    glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+    glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+
     // Use the memory mBufYuv data to create a real y data texture
     glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, impl->mVideoW, impl->mVideoH, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, impl->mBufYuv);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

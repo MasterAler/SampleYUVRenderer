@@ -13,7 +13,7 @@ a simple frame (okay, with YUV 2 RGB conversion) doesn't feel like something, wh
 
 ## How it works?
 
-Since Qt supports OpenGL ES with shaders and other fine stuff (starting with Qt 5.6 or so), you can obtain 
+Since Qt supports modern OpenGL (and even OpenGL ES) with shaders and other fine stuff (starting with Qt 5.6 or so), you can obtain 
 a well-behaving rendering widget, possible to be embedded in your widget app.
 
 Cross-platform and _maybe_ even portable (depends on the drivers/hardware support etc).
